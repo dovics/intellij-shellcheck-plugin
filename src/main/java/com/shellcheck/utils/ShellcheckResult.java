@@ -32,13 +32,24 @@ public class ShellcheckResult {
         public String level;
         public String code;
         public String message;
+        public Fix fix;
 
         public String getFormattedMessage() {
             return message.trim() + " [" + (code == null ? "none" : "SC" + code) + "]";
         }
     }
 
-    public static class fix {
-        
+    public static class Fix {
+        public List<Replacement> replacements;
+    }
+
+    public static class Replacement {
+        public int column;
+        public int endColumn;
+        public int line;
+        public int endLine;
+        public String insertionPoint;
+        public int precedence;
+        public String replacement;
     }
 }

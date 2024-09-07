@@ -14,6 +14,7 @@ import com.intellij.psi.MultiplePsiFilesPerDocumentFileViewProvider;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.DocumentUtil;
+import com.shellcheck.utils.ShellcheckReplacementsAction;
 import com.shellcheck.utils.ShellcheckResult;
 import com.shellcheck.utils.ShellcheckRunner;
 import org.apache.commons.lang.StringUtils;
@@ -124,7 +125,13 @@ public class ShellcheckExternalAnnotator extends ExternalAnnotator<ShellcheckAnn
             range = new TextRange(errorRange.getColumnRange().getStartOffset(), errorRange.getColumnRange().getEndOffset());
         }
 
-        holder.newAnnotation(severity, "Shellcheck: " + issue.getFormattedMessage()).range(range).create();
+        AnnotationBuilder annotationBuilder =  holder.newAnnotation(severity, "Shellcheck: " + issue.getFormattedMessage()).range(range);
+
+        if (issue.fix != null && issue.fix.replacements != null) {
+            annotationBuilder = annotationBuilder.withFix(new ShellcheckReplacementsAction(issue.fix.replacements));
+        }
+
+        annotationBuilder.create();
     }
 
     private static boolean isShellcheckFile(PsiFile file) {
