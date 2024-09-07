@@ -45,7 +45,7 @@ public class ShellcheckInspection extends LocalInspectionTool implements BatchSu
 
     @Override
     @NotNull
-    public SuppressQuickFix[] getBatchSuppressActions(@Nullable PsiElement element) {
+    public SuppressQuickFix @NotNull [] getBatchSuppressActions(@Nullable PsiElement element) {
         return new SuppressQuickFix[0];
     }
 }

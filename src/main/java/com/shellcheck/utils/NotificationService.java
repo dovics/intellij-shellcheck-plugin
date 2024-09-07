@@ -1,6 +1,6 @@
 package com.shellcheck.utils;
 
-import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationGroupManager;
 import com.intellij.notification.NotificationListener;
 import com.intellij.notification.NotificationType;
 import com.intellij.notification.Notifications;
@@ -13,7 +13,7 @@ public class NotificationService {
 
     private static final String PLUGIN_NAME = "Shellcheck";
 
-    private Project project;
+    private final Project project;
     NotificationService(Project p) {
         project=p;
     }
@@ -23,7 +23,10 @@ public class NotificationService {
     }
 
     public void showInfoNotification(String content, NotificationType type, NotificationListener notificationListener) {
-        Notification notification = new Notification(PLUGIN_NAME, PLUGIN_NAME, content, type, notificationListener);
-        Notifications.Bus.notify(notification, project);
+        NotificationGroupManager.getInstance()
+                .getNotificationGroup("Shellcheck")
+                .createNotification(content, type)
+                .notify(project);
+        LOG.info(content);
     }
 }

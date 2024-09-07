@@ -24,6 +24,8 @@
   <!-- Extension points defined by the plugin.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
   <extensions defaultExtensionNs="com.intellij">
+    <notificationGroup id="Shellcheck"
+                       displayType="BALLOON"/>
     <projectService serviceImplementation="com.shellcheck.utils.NotificationService" />
     <projectService serviceImplementation="com.shellcheck.settings.Settings"/>
     <projectConfigurable instance="com.shellcheck.settings.ShellcheckSettingsConfigurable"

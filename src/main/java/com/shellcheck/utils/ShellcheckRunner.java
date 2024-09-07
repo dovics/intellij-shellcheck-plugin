@@ -88,7 +88,7 @@ public final class ShellcheckRunner {
         OSProcessHandler processHandler = new ColoredProcessHandler(process, commandLine.getCommandLineString(), StandardCharsets.UTF_8);
         final ProcessOutput output = new ProcessOutput();
         processHandler.addProcessListener(new ProcessAdapter() {
-            public void onTextAvailable(ProcessEvent event, Key outputType) {
+            public void onTextAvailable(@NotNull ProcessEvent event, @NotNull Key outputType) {
                 if (outputType.equals(ProcessOutputTypes.STDERR)) {
                     output.appendStderr(event.getText());
                 } else if (!outputType.equals(ProcessOutputTypes.SYSTEM)) {

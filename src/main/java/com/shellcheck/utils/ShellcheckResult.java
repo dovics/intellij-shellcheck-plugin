@@ -37,4 +37,8 @@ public class ShellcheckResult {
             return message.trim() + " [" + (code == null ? "none" : "SC" + code) + "]";
         }
     }
+
+    public static class fix {
+        
+    }
 }

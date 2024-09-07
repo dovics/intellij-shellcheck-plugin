@@ -102,7 +102,7 @@ public class ShellcheckExternalAnnotator extends ExternalAnnotator<ShellcheckAnn
             case "error" -> treatAsWarnings ? HighlightSeverity.WARNING : HighlightSeverity.ERROR;
             case "warning" -> HighlightSeverity.WARNING;
             default -> // info and style
-                    HighlightSeverity.INFORMATION;
+                    HighlightSeverity.WEAK_WARNING;
         };
     }
 
@@ -111,7 +111,8 @@ public class ShellcheckExternalAnnotator extends ExternalAnnotator<ShellcheckAnn
                                         Settings settings) {
         boolean showErrorOnWholeLine = settings.getState().highlightWholeLine;
         ErrorRange errorRange = new ErrorRange(document, issue);
-        if (errorRange.isValid()) {
+        if (!errorRange.isValid()) {
+            LOG.debug("ErrorRange isn't validation, issue.endLine: " + issue.endLine +" , document.lineCount: " + document.getLineCount());
             return;
         }
 
@@ -160,6 +161,9 @@ public class ShellcheckExternalAnnotator extends ExternalAnnotator<ShellcheckAnn
             int endLine = issue.endLine == 0 ? line : issue.endLine - 1;
 
             if (endLine >= 0 && endLine < document.getLineCount()) {
+                if(endLine == document.getLineCount() - 1) {
+                    endLine = line;
+                }
                 TextRange beginLineRange = TextRange.create(document.getLineStartOffset(line), document.getLineEndOffset(line));
                 int lineStartOffset = appendNormalizeColumn(document, beginLineRange, issue.column - 1).orElse(beginLineRange.getStartOffset());
 
