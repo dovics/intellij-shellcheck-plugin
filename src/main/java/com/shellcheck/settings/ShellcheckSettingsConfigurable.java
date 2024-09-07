@@ -4,6 +4,7 @@ import com.intellij.ide.actions.ShowSettingsUtilImpl;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ex.SingleConfigurableEditor;
 import com.intellij.openapi.project.Project;
+import com.shellcheck.ShellcheckBundle;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,7 +21,7 @@ public class ShellcheckSettingsConfigurable implements Configurable {
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
     public String getDisplayName() {
-        return "SDK: Application Settings Example";
+        return ShellcheckBundle.message("shellcheck.setting.config.display.name");
     }
 
     @Override
@@ -31,7 +32,7 @@ public class ShellcheckSettingsConfigurable implements Configurable {
     @Nullable
     @Override
     public JComponent createComponent() {
-        ShellcheckSettingsComponent = new ShellcheckSettingsComponent();
+        ShellcheckSettingsComponent = new ShellcheckSettingsComponent(project);
         return ShellcheckSettingsComponent.getPanel();
     }
 

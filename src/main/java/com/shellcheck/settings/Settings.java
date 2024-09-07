@@ -48,8 +48,19 @@ public class Settings implements PersistentStateComponent<Settings.State> {
     }
 
     public boolean isValid() {
-        if (ShellcheckFinder.validatePath(project, state.shellcheckExecutable)) {
-            return true;
+        if (state.shellcheckExecutable != null && !state.shellcheckExecutable.isEmpty()) {
+            if (ShellcheckFinder.validatePath(project, state.shellcheckExecutable)) {
+                return true;
+            }
+        } else {
+            String path = ShellcheckFinder.findShellcheckExe();
+            if (path != null && !path.isEmpty()) {
+                state.shellcheckExecutable = path;
+                return true;
+            }
+
+            validationFailed(ShellcheckBundle.message("shellcheck.settings.path.empty"));
+            return false;
         }
 
         validationFailed(ShellcheckBundle.message("shellcheck.settings.invalid"));

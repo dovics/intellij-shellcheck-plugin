@@ -16,6 +16,14 @@ public final class ShellcheckFinder {
     private ShellcheckFinder() {
     }
 
+    static String findShellcheckExe() {
+        File path = PathEnvironmentVariableUtil.findInPath(getBinName("shellcheck"));
+        if (path == null) {
+            return null;
+        }
+
+        return path.getAbsolutePath();
+    }
     @NotNull
     static List<String> findAllShellcheckExe() {
         List<File> fromPath = PathEnvironmentVariableUtil.findAllExeFilesInPath(getBinName("shellcheck"));
@@ -24,15 +32,13 @@ public final class ShellcheckFinder {
 
     static String getBinName(String baseBinName) {
         // TODO do we need different name for windows?
-        return SystemInfo.isWindows ? baseBinName + ".cmd" : baseBinName;
+        return SystemInfo.isWindows ? baseBinName + ".exe" : baseBinName;
     }
 
     static boolean validatePath(Project project, String path) {
-        File filePath = new File(path);
-        if (filePath.isAbsolute()) {
-            if (!filePath.exists() || !filePath.isFile()) {
-                return false;
-            }
+        File file = new File(path);
+        if (file.isAbsolute()) {
+            return file.exists() && file.isFile() && file.canExecute();
         } else {
             if (project == null) {
                 return false;
@@ -49,9 +55,7 @@ public final class ShellcheckFinder {
             }
 
             VirtualFile child = VfsUtil.findRelativeFile(baseDir, path);
-            return child != null && child.exists() && !child.isDirectory();
+            return child != null && child.exists() && !child.isDirectory() && file.canExecute();
         }
-
-        return true;
     }
 }
