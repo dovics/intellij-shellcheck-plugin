@@ -40,16 +40,6 @@ public class ShellcheckResult {
     }
 
     public static class Fix {
-        public List<Replacement> replacements;
-    }
-
-    public static class Replacement {
-        public int column;
-        public int endColumn;
-        public int line;
-        public int endLine;
-        public String insertionPoint;
-        public int precedence;
-        public String replacement;
+        public List<ShellcheckReplacement> replacements;
     }
 }

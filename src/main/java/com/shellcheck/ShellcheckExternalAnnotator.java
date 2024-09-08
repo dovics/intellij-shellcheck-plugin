@@ -2,7 +2,6 @@ package com.shellcheck;
 
 import com.intellij.lang.annotation.*;
 import com.shellcheck.settings.Settings;
-import com.shellcheck.utils.NotificationService;
 import com.intellij.notification.NotificationType;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Document;
@@ -14,7 +13,7 @@ import com.intellij.psi.MultiplePsiFilesPerDocumentFileViewProvider;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.util.DocumentUtil;
-import com.shellcheck.utils.ShellcheckReplacementsAction;
+import com.shellcheck.utils.NotificationService;
 import com.shellcheck.utils.ShellcheckResult;
 import com.shellcheck.utils.ShellcheckRunner;
 import org.apache.commons.lang.StringUtils;

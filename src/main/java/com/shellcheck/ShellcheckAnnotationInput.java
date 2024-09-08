@@ -1,8 +1,8 @@
 package com.shellcheck;
 
 import com.shellcheck.settings.Settings;
-import com.shellcheck.utils.NotificationService;
 import com.intellij.psi.PsiFile;
+import com.shellcheck.utils.NotificationService;
 
 public class ShellcheckAnnotationInput {
     private final Settings settings;
